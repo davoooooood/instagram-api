@@ -7,10 +7,11 @@ export class UserFeed extends Feed<UserFeedResponse, UserFeedResponseItemsItem> 
   @Expose()
   private nextMaxId: string;
 
-  protected set state(body: UserFeedResponse) {
+  public set state(body: UserFeedResponse) {
     this.moreAvailable = body.more_available;
     this.nextMaxId = body.next_max_id;
   }
+  
 
   async request() {
     const { body } = await this.client.request.send<UserFeedResponse>({
