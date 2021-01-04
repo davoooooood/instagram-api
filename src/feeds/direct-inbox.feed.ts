@@ -15,7 +15,7 @@ export class DirectInboxFeed extends Feed<DirectInboxFeedResponse, DirectInboxFe
     this.cursor = body.inbox.oldest_cursor;
   }
 
-  async request(messagesLimit: number, limit: number) {
+  async request() {
     const { body } = await this.client.request.send<DirectInboxFeedResponse>({
       url: `/api/v1/direct_v2/inbox/`,
       qs: {
