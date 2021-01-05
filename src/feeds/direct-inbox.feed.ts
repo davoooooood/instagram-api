@@ -15,17 +15,17 @@ export class DirectInboxFeed extends Feed<DirectInboxFeedResponse, DirectInboxFe
     this.cursor = body.inbox.oldest_cursor;
   }
 
-  async request() {
+  async request(messageLimit?:number = 15, limit?:number = 30, visual_message_return_type?:string = 'unseen') {
     const { body } = await this.client.request.send<DirectInboxFeedResponse>({
       url: `/api/v1/direct_v2/inbox/`,
       qs: {
-        visual_message_return_type: 'unseen' ,
+        visual_message_return_type,
         cursor: this.cursor,
         direction: this.cursor ? 'older' : void 0,
         seq_id: this.seqId,
-        thread_message_limit: 15,
+        thread_message_limit: messageLimit,
         persistentBadging: true,
-        limit: 30,
+        limit,
       },
     });
     this.state = body;
